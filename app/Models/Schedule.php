@@ -10,13 +10,15 @@ class Schedule extends Model
     use HasFactory;
 
     protected $fillable = [
-        'date',
+        'day',
         'start_time',
         'end_time',
         'semester',
         'section',
         'subject',
         'room',
+        'user_id',
+        'is_deleted'
     ];
 
     public function user(): BelongsTo

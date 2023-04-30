@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        return User::all()->values();
+        return User::with('schedules')->get()->values();
     }
 
     public function resetPassword(string $id) {

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->enum('status', ['present', 'absent', 'not_visited'])->default('not_visited');
             $table->string('comment')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
+            $table->boolean('is_deleted')->default(false);
             $table->timestamps();
         });
 
