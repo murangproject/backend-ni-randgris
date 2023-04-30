@@ -17,6 +17,8 @@ class Schedule extends Model
         'section',
         'subject',
         'room',
+        'status',
+        'comment',
         'user_id',
         'is_deleted'
     ];

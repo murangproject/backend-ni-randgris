@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Room;
+use App\Models\Activity;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class RoomController extends Controller
@@ -54,6 +56,49 @@ class RoomController extends Controller
             if ($deleted) {
                 return response()->json([
                     'message' => 'Room deleted successfully',
+                ], 200);
+            }
+        }
+    }
+
+    public function borrowRoom(string $id) {
+        $room = Room::where('id', $id)->get()->first();
+        if($room) {
+            $updated = $room->update([
+                'borrower' => auth()->user()->id,
+                'borrow_time' => Carbon::now()->toDateTimeLocalString(),
+                'status' => 'occupied'
+            ]);
+            if($updated) {
+                return response()->json([
+                    'message' => 'Room borrowed successfully',
+                    'room' => $room,
+                ], 200);
+            }
+        }
+    }
+
+    public function returnRoom(string $id) {
+        $room = Room::where('id', $id)->get()->first();
+        if($room) {
+            $updated = $room->update([
+                'return_time' => Carbon::now()->toDateTimeLocalString(),
+                'status' => 'available'
+            ]);
+            Activity::create([
+                'source' => $room->room_name . '',
+                    'data'=> json_encode($room)
+                ]);
+
+            $room->update([
+                'borrower' => null,
+                'borrow_time' => null,
+                'return_time' => null,
+            ]);
+            if($updated) {
+                return response()->json([
+                    'message' => 'Room borrowed successfully',
+                    'room' => $room,
                 ], 200);
             }
         }

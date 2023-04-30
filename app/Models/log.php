@@ -5,16 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Room extends Model
+class log extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'room_name',
-        'borrower',
-        'borrow_time',
-        'return_time',
-        'status',
-        'is_deleted'
+        'source',
+        'data'
     ];
 }

@@ -9,6 +9,22 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    public function changePassword(Request $request) {
+        $fields = $request->validate([
+            'password' => 'required|confirmed',
+        ]);
+
+        $user = Auth::user();
+
+        $user->password = Hash::make($fields['password']);
+        $user->save();
+
+        return response()->json([
+            'message' => 'Password changed successfully',
+            'user' => $user,
+        ], 200);
+    }
+
     public function login(Request $request) {
         $fields = $request->validate([
             'email' => 'required|string',

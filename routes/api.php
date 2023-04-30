@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\SectionController;
@@ -25,6 +26,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::group(['middleware' => ['auth:sanctum'], 'excluded_middleware' => 'throttle:api'], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/role', [AuthController::class, 'role']);
+    Route::post('/change-password', [AuthController::class, 'changePassword']);
 
     Route::get('/check-auth', function () {
         return response()->json(['user' => auth()->user()]);
@@ -42,6 +44,7 @@ Route::group(['middleware' => ['auth:sanctum'], 'excluded_middleware' => 'thrott
     Route::get('/schedules', [ScheduleController::class, 'index']);
     Route::post('/schedules', [ScheduleController::class, 'store']);
     Route::put('/schedules/{id}', [ScheduleController::class, 'update']);
+    Route::put('/schedules/{id}/status', [ScheduleController::class, 'updateStatus']);
     Route::get('/schedules/user/{id}', [ScheduleController::class, 'getScheduleByUserId']);
     Route::delete('/schedules/{id}', [ScheduleController::class, 'destroy']);
 
@@ -62,5 +65,10 @@ Route::group(['middleware' => ['auth:sanctum'], 'excluded_middleware' => 'thrott
     Route::post('/rooms', [RoomController::class, 'store']);
     Route::put('/rooms/{id}', [RoomController::class, 'update']);
     Route::delete('/rooms/{id}', [RoomController::class, 'destroy']);
+    Route::post('/rooms/{id}/borrow', [RoomController::class, 'borrowRoom']);
+    Route::post('/rooms/{id}/return', [RoomController::class, 'returnRoom']);
+
+    // Activity Logs
+    Route::get('/activities', [ActivityController::class, 'index']);
 });
 

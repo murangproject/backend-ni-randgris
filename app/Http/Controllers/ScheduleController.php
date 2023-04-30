@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Schedule;
+use App\Models\Activity;
 use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
@@ -68,6 +69,30 @@ class ScheduleController extends Controller
         if($schedule) {
             $updated = $schedule->update($request->all());
             if($updated) {
+                return response()->json(
+                    [
+                        'message' => 'Schedule updated successfully',
+                        'schedule' => $schedule,
+                    ],
+                    200
+                );
+            }
+        }
+    }
+
+    public function updateStatus(Request $request, string $id)
+    {
+        $schedule = Schedule::where('id', $id)->get()->first();
+        if($schedule) {
+            $updated = $schedule->update($request->all());
+            if($updated) {
+                Activity::create(
+                    [
+                        'type'=> 'attendance',
+                        'source' => $schedule->id,
+                        'data' => json_encode($schedule),
+                    ]
+                );
                 return response()->json(
                     [
                         'message' => 'Schedule updated successfully',

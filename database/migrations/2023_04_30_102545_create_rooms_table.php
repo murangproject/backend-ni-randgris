@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->string('room_name');
+            $table->integer('borrower')->nullable();
             $table->string('borrow_time')->nullable();
             $table->string('return_time')->nullable();
             $table->enum('status', ['available', 'occupied'])->default('available');

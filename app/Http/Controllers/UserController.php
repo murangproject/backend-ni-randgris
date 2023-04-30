@@ -49,7 +49,7 @@ class UserController extends Controller
                 'last_name' => $fields['last_name'],
                 'email' => $fields['email'],
                 'role_type' => $fields['role_type'],
-                'password' => env('INITIAL_USER_PASSWORD'),
+                'password' => Hash::make(env('INITIAL_USER_PASSWORD')),
             ]
         );
 
