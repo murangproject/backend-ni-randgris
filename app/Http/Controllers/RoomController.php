@@ -7,43 +7,55 @@ use Illuminate\Http\Request;
 
 class RoomController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        return Room::all()->values();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $fields = $request->validate([
+            'room_name' => 'required|string',
+        ]);
+
+        $created = Room::create([
+            'room_name' => $fields['room_name'],
+        ]);
+
+        if ($created) {
+            return response()->json([
+                'message' => 'Room created successfully',
+                'room' => $created,
+            ], 200);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Room $room)
+    public function update(Request $request, string $id)
     {
-        //
+        $room = Room::where('id', $id)->get()->first();
+        if ($room) {
+            $updated = $room->update($request->all());
+            if ($updated) {
+                return response()->json([
+                    'message' => 'Room updated successfully',
+                    'room' => $room,
+                ], 200);
+            }
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Room $room)
+    public function destroy(string $id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Room $room)
-    {
-        //
+        $room = Room::where('id', $id)->get()->first();
+        if ($room) {
+            $deleted = $room->update([
+                'is_deleted' => true
+            ]);
+            if ($deleted) {
+                return response()->json([
+                    'message' => 'Room deleted successfully',
+                ], 200);
+            }
+        }
     }
 }

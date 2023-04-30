@@ -5,15 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Room extends Model
+class Section extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'room_name',
-        'borrow_time',
-        'return_time',
-        'status',
-        'is_deleted'
+        'name',
+        'is_deleted',
     ];
 }

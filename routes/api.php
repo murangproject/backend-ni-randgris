@@ -3,6 +3,9 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\SectionController;
+use App\Http\Controllers\RoomController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,5 +44,23 @@ Route::group(['middleware' => ['auth:sanctum'], 'excluded_middleware' => 'thrott
     Route::put('/schedules/{id}', [ScheduleController::class, 'update']);
     Route::get('/schedules/user/{id}', [ScheduleController::class, 'getScheduleByUserId']);
     Route::delete('/schedules/{id}', [ScheduleController::class, 'destroy']);
+
+    // Section
+    Route::get('/sections', [SectionController::class, 'index']);
+    Route::post('/sections', [SectionController::class, 'store']);
+    Route::put('/sections/{id}', [SectionController::class, 'update']);
+    Route::delete('/sections/{id}', [SectionController::class, 'destroy']);
+
+    // Subjects
+    Route::get('/subjects', [SubjectController::class, 'index']);
+    Route::post('/subjects', [SubjectController::class, 'store']);
+    Route::put('/subjects/{id}', [SubjectController::class, 'update']);
+    Route::delete('/subjects/{id}', [SubjectController::class, 'destroy']);
+
+    // Room
+    Route::get('/rooms', [RoomController::class, 'index']);
+    Route::post('/rooms', [RoomController::class, 'store']);
+    Route::put('/rooms/{id}', [RoomController::class, 'update']);
+    Route::delete('/rooms/{id}', [RoomController::class, 'destroy']);
 });
 
