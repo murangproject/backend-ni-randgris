@@ -21,6 +21,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->unsignedBigInteger('schedule_id')->nullable();
+            $table->boolean('request_password_reset')->default(false);
             $table->boolean('is_deleted')->default(false);
             $table->rememberToken();
             $table->timestamps();

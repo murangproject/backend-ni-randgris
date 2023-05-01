@@ -18,6 +18,7 @@ class UserController extends Controller
 
         if($user) {
             $user->password = Hash::make(env('INITIAL_USER_PASSWORD'));
+            $user->request_password_reset = false;
             $user->save();
 
             return response()->json(

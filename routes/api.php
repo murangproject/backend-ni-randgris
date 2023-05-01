@@ -10,11 +10,14 @@ use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
+Route::put('/request-password-reset', [AuthController::class, 'requestPasswordReset']);
 
 Route::group(['middleware' => ['auth:sanctum'], 'excluded_middleware' => 'throttle:api'], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/role', [AuthController::class, 'role']);
     Route::post('/change-password', [AuthController::class, 'changePassword']);
+    Route::put('/update-password', [AuthController::class, 'updatePassword']);
+    Route::put('/update-profile', [AuthController::class, 'updateProfile']);
 
     Route::get('/check-auth', function () {
         return response()->json(['user' => auth()->user()]);

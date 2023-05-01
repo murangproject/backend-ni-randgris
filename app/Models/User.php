@@ -25,6 +25,7 @@ class User extends Authenticatable
         'role_type',
         'email',
         'password',
+        'request_password_reset',
         'is_deleted'
     ];
 
